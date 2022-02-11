@@ -1,13 +1,19 @@
 <script>
 	import ImageEditView from "./components/ImageEditView.svelte"
 	import ImageEditControl from "./components/ImageEditControl.svelte"
+	
+	let imageData;
+	const readImage = (e) => {
+		imageData = e.detail.image;
+		// console.log("set image", imageData)
+	}
 </script>
 
 <main>
 	<h1>ImageEdit</h1>
 	<div class="main_view">
-		<ImageEditView />
-		<ImageEditControl />
+		<ImageEditView imageData={imageData}/>
+		<ImageEditControl imageData={imageData} on:readImage={readImage}/>
 	</div>
 	<div class="credit">Created by go.hosohara@gmail.com</div>
 </main>
@@ -17,7 +23,6 @@
 		padding: 1em;
 		width: 800px;
 		margin: 0 auto;
-		border: solid 1px black;
 	}
 
 	h1 {
@@ -31,6 +36,7 @@
 		display: flex;
 		flex-direction: row;
 		margin: auto 0;
+		border: solid 1px black;
 	}
 	
 	.credit {
