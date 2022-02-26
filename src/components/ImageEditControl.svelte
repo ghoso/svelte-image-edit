@@ -1,12 +1,21 @@
 <script>
   import { createEventDispatcher } from "svelte";
   import FlipControl from "./FlipControl.svelte"
+  import ScaleControl from "./ScaleControl.svelte"
 
-  let fileinput;
+  // image data reading from file
   export let imageData;
-
+  // canvas context
+  export let context;
+  // Image object
+  export let image_obj;
+  // Canvas
+  export let image_canvas;
+  
+  let fileinput;
   const dispatch = createEventDispatcher();
 
+  //  read image file from file open dialog
   const onFileSelected = (e) => {
     let image = e.target.files[0];
     //console.log("image file:", image)
@@ -30,9 +39,8 @@
          accept="image/*"
          on:change={(e)=>onFileSelected(e)}
          bind:this={fileinput}>
-  <FlipControl />
-  <div class="edit_control_label">拡大・縮小</div>
-  <input type="range" class="slider" value="50" min="1" max="100" />
+  <FlipControl image={imageData} image_obj={image_obj} context={context} image_canvas={image_canvas}/>
+  <ScaleControl image={imageData} image_obj={image_obj} context={context} image_canvas={image_canvas}/>
   <button class="control_btn">保存</button>
 </div>
 
@@ -42,6 +50,7 @@
   width: 130px;
   margin: 10px auto;
 }
+
 .edit_control {
   width: 200px;
   height: 600px;
@@ -59,9 +68,5 @@
 
 .control_btn {
   margin: 10px 20px;
-}
-
-.slider {
-  margin: 0 10px 10px 10px;
 }
 </style>
